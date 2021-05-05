@@ -21,7 +21,7 @@ struct LoginView: View {
     var body: some View {
 
         if login.isLoggedIn {
-            MainView()
+            MainView(profileModel: login.profileModel)
         } else {
 
             VStack() {
