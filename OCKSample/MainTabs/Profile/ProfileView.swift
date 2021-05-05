@@ -28,7 +28,7 @@ struct ProfileView: View {
     @State var birthday = Calendar.current.date(byAdding: .year, value: -20, to: Date())!
 
     @State private var tintColor = UIColor { $0.userInterfaceStyle == .light ?  #colorLiteral(red: 0, green: 0.2858072221, blue: 0.6897063851, alpha: 1) : #colorLiteral(red: 0.06253327429, green: 0.6597633362, blue: 0.8644603491, alpha: 1) }
-    @State private var showingImagePicker = false
+    @State private var isShowingImagePicker = false
     
     var body: some View {
         //A NavigationView is needed to use Picker
@@ -43,7 +43,7 @@ struct ProfileView: View {
                         .shadow(radius: 10)
                         .overlay(Circle().stroke(Color(tintColor), lineWidth: 5))
                         .onTapGesture {
-                            self.showingImagePicker = true
+                            self.isShowingImagePicker = true
                         }
                 } else {
                     Image("ProfileIcon")
@@ -54,7 +54,7 @@ struct ProfileView: View {
                         .shadow(radius: 10)
                         .overlay(Circle().stroke(Color(tintColor), lineWidth: 5))
                         .onTapGesture {
-                            self.showingImagePicker = true
+                            self.isShowingImagePicker = true
                         }
                 }
 
@@ -181,7 +181,7 @@ struct ProfileView: View {
             }
         }).onAppear(perform: {
             profileViewModel.load()
-        }).sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+        }).sheet(isPresented: $isShowingImagePicker, onDismiss: loadImage) {
             ImagePicker(image: self.$profileViewModel.profilePicture)
         }.alert(isPresented: $profileViewModel.isShowingSaveAlert) {
             return Alert(title: Text("Update"),
