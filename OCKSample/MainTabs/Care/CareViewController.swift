@@ -30,9 +30,9 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 import CareKit
 import CareKitStore
-import SwiftUI
 import CareKitUI
 
 class CareViewController: OCKDailyPageViewController {
@@ -136,8 +136,10 @@ class CareViewController: OCKDailyPageViewController {
                 }
                 
                 if let stretchTask = tasks.first(where: { $0.id == "stretch" }) {
-                    let stretchCard = OCKInstructionsTaskViewController(task: stretchTask, eventQuery: .init(for: date),
+                    let stretchCard = CustomInstructionsTaskViewController(task: stretchTask, eventQuery: .init(for: date),
                                                                  storeManager: self.storeManager)
+                    stretchCard.detailImageFileName = "exercise.jpg" // We set our own image
+                    stretchCard.detailHTML = .init(html: "Stretching is good for you!")
                     listViewController.appendViewController(stretchCard, animated: false)
                 }
 
