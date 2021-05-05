@@ -30,9 +30,9 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 import CareKit
 import CareKitStore
-import SwiftUI
 import CareKitUI
 
 class CareViewController: OCKDailyPageViewController {

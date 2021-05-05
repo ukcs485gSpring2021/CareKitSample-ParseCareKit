@@ -7,9 +7,9 @@
 //
 
 import Foundation
+import UIKit
 import CareKit
 import CareKitStore
-import UIKit
 import CareKitUI
 
 /// A custom version of OCKInstructionsTaskViewController that allows adding a detail image and instruction.
