@@ -12,18 +12,85 @@ import CareKitStore
 import SwiftUI
 import ParseCareKit
 import UIKit
+import ParseSwift
 
 class Profile: ObservableObject {
     
     @Published var patient: OCKPatient? = nil
-    
+    @Published var sex: OCKBiologicalSex = .female
+    @Published var contact: OCKContact? = nil
+    @Published var isShowingSaveAlert = false
+    @Published var profilePicture = UIImage(systemName: "person.crop.circle") {
+        willSet {
+            if !settingProfilePicForFirstTime {
+                guard var user = User.current,
+                      let image = newValue?.jpegData(compressionQuality: 0.25) else{
+                    return
+                }
+                
+                let newProfilePicture = ParseFile(name: "profile.jpg", data: image)
+                user.profilePicture = newProfilePicture
+                user.save { result in
+                    switch result {
+                    
+                    case .success:
+                        print("Saved updated profile picture successfully.")
+                    case .failure(let error):
+                        print("Error saving profile picture: \(error)")
+                    }
+                }
+            }
+        }
+    }
+    private var settingProfilePicForFirstTime = true
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate //Importing UIKit gives us access here to get the OCKStore and ParseRemote
     
     init() {
-        
+        load()
+    }
+
+    func load() {
         //Find this patient
         findCurrentProfile { foundPatient in
             self.patient = foundPatient
+        }
+
+        //Find this contact
+        findCurrentContact { foundContact in
+            self.contact = foundContact
+        }
+
+        fetchProfilePic()
+    }
+
+    private func fetchProfilePic() {
+        //Profile pics are stored in Parse User.
+        User.current?.fetch { result in
+            switch result {
+            
+            case .success(let user):
+                if let pictureFile = user.profilePicture {
+                    //Download picture from server
+                    pictureFile.fetch { pictureResult in
+                        switch pictureResult {
+                        
+                        case .success(let profilePic):
+                            guard let path = profilePic.localURL?.relativePath else {
+                                return
+                            }
+                            self.profilePicture = UIImage(contentsOfFile: path)
+                        case .failure(let error):
+                            print("Error fetching profile picture: \(error).")
+                        }
+                        self.settingProfilePicForFirstTime = false
+                    }
+                } else {
+                    self.settingProfilePicForFirstTime = false
+                }
+                    
+            case .failure(let error):
+                print("Error fetching user: \(error).")
+            }
         }
     }
     
@@ -54,11 +121,41 @@ class Profile: ObservableObject {
             }
         }
     }
-    
+
+    private func findCurrentContact(completion: @escaping (OCKContact?)-> Void) {
+        
+        guard let uuid = getRemoteClockUUIDAfterLoginFromLocalStorage() else {
+            completion(nil)
+            return
+        }
+
+        //Build query to search for OCKPatient
+        var queryForCurrentContact = OCKContactQuery(for: Date()) //This makes the query for the current version of Patient
+        queryForCurrentContact.ids = [uuid.uuidString] //Search for the current logged in user
+        
+        self.appDelegate.synchronizedStoreManager?.store.fetchAnyContacts(query: queryForCurrentContact, callbackQueue: .main) { result in
+            switch result {
+            
+            case .success(let foundContact):
+                guard let currentContact = foundContact.first as? OCKContact else {
+                    completion(nil)
+                    return
+                }
+                completion(currentContact)
+                
+            case .failure(let error):
+                print("Error: Couldn't find contact with id \"\(uuid)\". It's possible they have never been saved. Query error: \(error)")
+                completion(nil)
+            }
+        }
+    }
+
     //Mark: User intentions
     
-    func saveProfile(_ first: String, last: String, birth: Date) {
+    func saveProfile(_ first: String, last: String, birth: Date, sex: OCKBiologicalSex, note: String, street: String, city: String, state: String, zipcode: String) {
         
+        isShowingSaveAlert = true //Make alert pop up
+
         if var patientToUpdate = patient {
             //If there is a currentPatient that was fetched, check to see if any of the fields changed
             
@@ -78,7 +175,18 @@ class Profile: ObservableObject {
                 patientHasBeenUpdated = true
                 patientToUpdate.birthday = birth
             }
+
+            if patient?.sex != sex {
+                patientHasBeenUpdated = true
+                patientToUpdate.sex = sex
+            }
             
+            let notes = [OCKNote(author: first, title: "my note", content: note)]
+            if patient?.notes != notes {
+                patientHasBeenUpdated = true
+                patientToUpdate.notes = notes
+            }
+
             if patientHasBeenUpdated {
                 appDelegate.synchronizedStoreManager?.store.updateAnyPatient(patientToUpdate, callbackQueue: .main) { result in
                     switch result {
@@ -115,6 +223,72 @@ class Profile: ObservableObject {
                         return
                     }
                     self.patient = newPatient
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            }
+        }
+
+        if var contactToUpdate = contact {
+            //If there is a currentPatient that was fetched, check to see if any of the fields changed
+            
+            var contactHasBeenUpdated = false
+            
+            //Since OCKPatient was updated earlier, we should compare against this name
+            if let patientName = patient?.name,
+                contact?.name != patient?.name {
+                contactHasBeenUpdated = true
+                contactToUpdate.name = patientName
+            }
+
+            //Create a mutable temp address to compare
+            let potentialAddress = OCKPostalAddress()
+            potentialAddress.street = street
+            potentialAddress.city = city
+            potentialAddress.state = state
+            potentialAddress.postalCode = zipcode
+
+            if contact?.address != potentialAddress {
+                contactHasBeenUpdated = true
+                contactToUpdate.address = potentialAddress
+            }
+
+            if contactHasBeenUpdated {
+                appDelegate.synchronizedStoreManager?.store.updateAnyContact(contactToUpdate, callbackQueue: .main) { result in
+                    switch result {
+                    
+                    case .success(let updated):
+                        print("Successfully updated contact")
+                        guard let updatedContact = updated as? OCKContact else {
+                            return
+                        }
+                        self.contact = updatedContact
+                    case .failure(let error):
+                        print("Error updating contact: \(error)")
+                    }
+                }
+            }
+            
+        } else {
+            
+            guard let remoteUUID = UserDefaults.standard.object(forKey: Constants.parseRemoteClockIDKey) as? String,
+                  let patientName = patient?.name else {
+                print("Error: The user currently isn't logged in")
+                return
+            }
+            
+            let newContact = OCKContact(id: remoteUUID, name: patientName, carePlanUUID: nil)
+            
+            //This is new patient that has never been saved before
+            appDelegate.synchronizedStoreManager?.store.addAnyContact(newContact, callbackQueue: .main) { result in
+                switch result {
+                
+                case .success(let new):
+                    print("Succesffully saved new patient")
+                    guard let newContact = new as? OCKContact else {
+                        return
+                    }
+                    self.contact = newContact
                 case .failure(let error):
                     print("Error: \(error)")
                 }
@@ -163,10 +337,28 @@ class Profile: ObservableObject {
                 }
                 self.patient = patient
                 
+                //Create a new Contact on signup as well
+                let newContact = OCKContact(id: remoteUUID.uuidString, givenName: first, familyName: last, carePlanUUID: nil)
+                self.appDelegate.synchronizedStoreManager?.store.addAnyContact(newContact, callbackQueue: .main) { result in
+                    switch result {
+                    
+                    case .success(let savedContact):
+                        
+                        guard let contact = savedContact as? OCKContact else {
+                            return
+                        }
+                        self.contact = contact
+                        
+                        print("Successfully added a new Contact")
+                    case .failure(let error):
+                        print("Error adding Contact: \(error)")
+                    }
+                }
+
                 print("Successfully added a new Patient")
                 completion(.success(patient))
             case .failure(let error):
-                print("Error added patient: \(error)")
+                print("Error adding Patient: \(error)")
                 completion(.failure(error))
             }
         }
@@ -247,3 +439,7 @@ class Profile: ObservableObject {
         try appDelegate.coreDataStore.delete() //Delete data in local OCKStore database
     }
 }
+
+//Needed to use OCKBiologicalSex in a Picker.
+//Simple conformance to hashable protocol.
+extension OCKBiologicalSex: Hashable { }

@@ -73,7 +73,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     }
                     self.appDelegate.setupRemotes(uuid: uuid)
                     self.appDelegate.parse.automaticallySynchronizes = true
-                    self.window?.rootViewController = UIHostingController(rootView: MainView()) //Wraps a SwiftUI view in UIKit view
+                    self.window?.rootViewController = UIHostingController(rootView: MainView(profileModel: profile)) //Wraps a SwiftUI view in UIKit view
 
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         NotificationCenter.default.post(.init(name: Notification.Name(rawValue: Constants.requestSync)))

@@ -23,7 +23,7 @@ class Login: ObservableObject {
             objectWillChange.send() //Publishes a notification to subscribers whenever this value changes
         }
     }
-    private var profileModel: Profile?
+    private(set) var profileModel: Profile!
     
     //MARK: User intentional behavier
 

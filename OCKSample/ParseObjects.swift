@@ -10,11 +10,14 @@ import Foundation
 import ParseSwift
 
 struct User: ParseUser {
+    
     var authData: [String : [String : String]?]?
     
     var username: String?
     
     var email: String?
+
+    var emailVerified: Bool?
     
     var password: String?
     
@@ -25,6 +28,8 @@ struct User: ParseUser {
     var updatedAt: Date?
     
     var ACL: ParseACL?
+
+    var profilePicture: ParseFile?
     
     init() {
         ACL = try? ParseACL.defaultACL()
