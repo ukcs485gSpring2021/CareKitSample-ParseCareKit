@@ -36,7 +36,6 @@
 		70F79B192641FB7F00731C46 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F79B182641FB7F00731C46 /* ImagePicker.swift */; };
 		70F79B242642C3B600731C46 /* CustomInstructionsTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F79B232642C3B600731C46 /* CustomInstructionsTaskViewController.swift */; };
 		70F79B372642DBC100731C46 /* CustomButtonLogTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F79B362642DBC100731C46 /* CustomButtonLogTaskViewController.swift */; };
-		70F79B3C2642DD3500731C46 /* CustomButtonLogTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F79B3B2642DD3500731C46 /* CustomButtonLogTaskView.swift */; };
 		70F79B612644325B00731C46 /* LogValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F79B602644325B00731C46 /* LogValueView.swift */; };
 		70F79B662644339E00731C46 /* LogValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F79B652644339E00731C46 /* LogValue.swift */; };
 		91AD922224A45A3900925D4D /* ParseCareKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91AD922124A45A3900925D4D /* ParseCareKit.plist */; };
@@ -145,7 +144,6 @@
 		70F79B182641FB7F00731C46 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		70F79B232642C3B600731C46 /* CustomInstructionsTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInstructionsTaskViewController.swift; sourceTree = "<group>"; };
 		70F79B362642DBC100731C46 /* CustomButtonLogTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonLogTaskViewController.swift; sourceTree = "<group>"; };
-		70F79B3B2642DD3500731C46 /* CustomButtonLogTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonLogTaskView.swift; sourceTree = "<group>"; };
 		70F79B602644325B00731C46 /* LogValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogValueView.swift; sourceTree = "<group>"; };
 		70F79B652644339E00731C46 /* LogValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogValue.swift; sourceTree = "<group>"; };
 		91AD922124A45A3900925D4D /* ParseCareKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ParseCareKit.plist; sourceTree = "<group>"; };
@@ -293,7 +291,6 @@
 			children = (
 				70F79B232642C3B600731C46 /* CustomInstructionsTaskViewController.swift */,
 				70F79B362642DBC100731C46 /* CustomButtonLogTaskViewController.swift */,
-				70F79B3B2642DD3500731C46 /* CustomButtonLogTaskView.swift */,
 				70F79B602644325B00731C46 /* LogValueView.swift */,
 				70F79B652644339E00731C46 /* LogValue.swift */,
 			);
@@ -604,7 +601,6 @@
 				7036E4CE256E9A0C006E9A3C /* ContactView.swift in Sources */,
 				70DFD80B2567074500B9DB12 /* LoginView.swift in Sources */,
 				E72B2C0A226939E3009A9438 /* AppDelegate.swift in Sources */,
-				70F79B3C2642DD3500731C46 /* CustomButtonLogTaskView.swift in Sources */,
 				70F79B612644325B00731C46 /* LogValueView.swift in Sources */,
 				7036E4C4256E0A48006E9A3C /* CareView.swift in Sources */,
 				70F79B662644339E00731C46 /* LogValue.swift in Sources */,

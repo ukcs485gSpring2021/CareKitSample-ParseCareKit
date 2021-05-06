@@ -221,7 +221,7 @@ class CareViewController: OCKDailyPageViewController {
     }
 }
 
-extension View {
+private extension View {
     func formattedHostingController() -> UIHostingController<Self> {
         let viewController = UIHostingController(rootView: self)
         viewController.view.backgroundColor = .clear

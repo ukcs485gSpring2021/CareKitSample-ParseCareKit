@@ -19,28 +19,33 @@ class CustomButtonLogTaskViewController: OCKButtonLogTaskViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     var selectedEventIndex = IndexPath()
+    var logValueViewController: UIHostingController<LogValueView>?
 
     override func taskView(_ taskView: UIView & OCKTaskDisplayable, didCreateOutcomeValueAt index: Int, eventIndexPath: IndexPath, sender: Any?) {
         
+        //Need to store this index to use later
         self.selectedEventIndex = eventIndexPath
-        guard let event = controller.eventFor(indexPath: self.selectedEventIndex) else { return }
         
-        let logValue = LogValue()
-        logValue.delegate = self
-        let logValueView = LogValueView(model: logValue).formattedHostingController()
+        //Setup SwiftUI view as UIKit view
+        let logValue = LogValue() //Initialize the view model.
+        logValue.delegate = self //Become a delegate of the view model. LogValue when delegate saving and dismissing to this class.
+        logValueViewController = LogValueView(viewModel: logValue).customformattedHostingController() //Our view is a SwiftUI view, but we need to use it in UIKit
         
-        let titleLabel = UILabel()
-        titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.font = UIFont(name: "Avenir", size: 18)
-        titleLabel.textColor = .black
-        titleLabel.text = event.task.title
-        logValueView.navigationItem.titleView = titleLabel
+        //Allow the view to be a popover and dismiss with a swipe.
+        //Also allows this to work properly on an iPad.
+        let presentationController = logValueViewController?.popoverPresentationController
+        presentationController?.barButtonItem = self.navigationItem.leftBarButtonItem
+        presentationController?.sourceRect = self.tabBarController!.tabBar.frame
+        presentationController?.sourceView = view
+        presentationController?.permittedArrowDirections = UIPopoverArrowDirection.any
         
-        present(logValueView, animated: true, completion: nil)
+        //Ensure we have a real controller
+        guard let controller = logValueViewController else { return }
+        present(controller, animated: true, completion: nil)
     }
 }
 
-//Conform to delegate so we can accept values
+/// Conform to delegate so we know when to save and dismiss the view.
 extension CustomButtonLogTaskViewController: LogValueDelegate {
 
     func save(_ value: String) {
@@ -77,5 +82,18 @@ extension CustomButtonLogTaskViewController: LogValueDelegate {
                 print(error)
             }
         }
+        dismiss()
+    }
+    
+    func dismiss() {
+        logValueViewController?.dismiss(animated: true, completion: nil)
+    }
+}
+
+//This extention only needs to be added to your project once.
+extension View {
+    func customformattedHostingController() -> UIHostingController<Self> {
+        let viewController = UIHostingController(rootView: self)
+        return viewController
     }
 }
