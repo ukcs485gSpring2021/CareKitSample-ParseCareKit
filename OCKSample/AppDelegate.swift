@@ -127,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension OCKStore {
-
+    
     func addTasksIfNotPresent(_ tasks: [OCKTask]) {
         let tasksToAdd = tasks
         let taskIdsToAdd = tasksToAdd.compactMap { $0.id }
@@ -237,7 +237,17 @@ extension OCKStore {
         var stretch = OCKTask(id: "stretch", title: "Stretch", carePlanUUID: nil, schedule: stretchSchedule)
         stretch.impactsAdherence = true
 
-        addTasksIfNotPresent([nausea, doxylamine, kegels, stretch])
+        let repsSchedule = OCKSchedule(composing: [
+            OCKScheduleElement(start: beforeBreakfast, end: nil, interval: DateComponents(day: 1),
+                               text: "Anytime throughout the day", targetValues: [], duration: .allDay)
+            ])
+
+        var reps = OCKTask(id: "reps", title: "Track your reps",
+                             carePlanUUID: nil, schedule: repsSchedule)
+        reps.impactsAdherence = false
+        reps.instructions = "Tap the button below anytime to add your reps."
+        
+        addTasksIfNotPresent([nausea, doxylamine, kegels, stretch, reps])
         
         
         var contact1 = OCKContact(id: "jane", givenName: "Jane",

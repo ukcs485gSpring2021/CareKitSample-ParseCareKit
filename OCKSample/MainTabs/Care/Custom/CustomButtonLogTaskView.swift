@@ -10,7 +10,7 @@ import UIKit
 import CareKitUI
 
 class CustomButtonLogTaskView: OCKButtonLogTaskView{
-    
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
         guard let typedCell = cell as? OCKButtonLogTaskView.DefaultCellType else { return cell }
@@ -19,10 +19,4 @@ class CustomButtonLogTaskView: OCKButtonLogTaskView{
         //typedCell.accessibilityLabel = loc("START_SURVEY")
         return typedCell
     }
-
-    /*
-    @objc
-    func didTapUpdatedLogButton(_ sender: UIControl) {
-        delegate?.taskView(self, didCreateOutcomeValueAt: 0, eventIndexPath: .init(row: 0, section: 0), sender: sender)
-    }*/
 }

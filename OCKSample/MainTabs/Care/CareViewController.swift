@@ -100,7 +100,7 @@ class CareViewController: OCKDailyPageViewController {
     override func dailyPageViewController(_ dailyPageViewController: OCKDailyPageViewController,
                                           prepare listViewController: OCKListViewController, for date: Date) {
 
-        let identifiers = ["doxylamine", "nausea", "stretch", "kegels", "steps", "heartRate"]
+        let identifiers = ["doxylamine", "nausea", "stretch", "kegels", "steps", "heartRate", "reps"]
         var query = OCKTaskQuery(for: date)
         query.ids = identifiers
         query.excludesTasksWithNoEvents = true
@@ -210,12 +210,18 @@ class CareViewController: OCKDailyPageViewController {
                                                                     storeManager: self.storeManager)
                     listViewController.appendViewController(nauseaCard, animated: false)
                 }
+                
+                if let repsTask = tasks.first(where: { $0.id == "reps" }) {
+                    let repsCard = CustomButtonLogTaskViewController(task: repsTask, eventQuery: .init(for: date),
+                                                                     storeManager: self.storeManager)
+                    listViewController.appendViewController(repsCard, animated: false)
+                }
             }
         }
     }
 }
 
-private extension View {
+extension View {
     func formattedHostingController() -> UIHostingController<Self> {
         let viewController = UIHostingController(rootView: self)
         viewController.view.backgroundColor = .clear
