@@ -16,9 +16,6 @@ import CareKitUI
 /// You can customize any Card CareKit gives you by subclassing it.
 class CustomInstructionsTaskViewController: OCKInstructionsTaskViewController {
 
-    /// A filename from your asset catalog.
-    var detailImageFileName = ""
-
     /// String representations of HTML and CSS for styling.
     var detailHTML = OCKDetailView.StyledHTML(html: "")
 
@@ -26,8 +23,11 @@ class CustomInstructionsTaskViewController: OCKInstructionsTaskViewController {
     override func didSelectTaskView(_ taskView: UIView & OCKTaskDisplayable, eventIndexPath: IndexPath) {
         do {
             let detailsViewController = try controller.initiateDetailsViewController(forIndexPath: eventIndexPath)
-            detailsViewController.detailView.imageView.image = UIImage(named: detailImageFileName)
+            if let task = controller.eventFor(indexPath: eventIndexPath)?.task as? OCKTask {
+                detailsViewController.detailView.imageView.image = UIImage.asset(task.asset)
+            }
             detailsViewController.detailView.html = detailHTML
+            
             present(detailsViewController, animated: true)
         } catch {
             if delegate == nil {
@@ -35,5 +35,17 @@ class CustomInstructionsTaskViewController: OCKInstructionsTaskViewController {
             }
             delegate?.taskViewController(self, didEncounterError: error)
         }
+    }
+}
+
+extension UIImage {
+    static func asset(_ name: String?) -> UIImage?{
+        // We can't be sure if the image they provide is in the assets folder, in the bundle, or in a directory.
+        guard let name = name else { return nil }
+        // We can check all 3 possibilities and then choose whichever is non-nil.
+        let symbol = UIImage(systemName: name)
+        let appAssetsImage = UIImage(named: name)
+        let otherUrlImage = UIImage(contentsOfFile: name)
+        return otherUrlImage ?? appAssetsImage ?? symbol
     }
 }

@@ -138,8 +138,7 @@ class CareViewController: OCKDailyPageViewController {
                 if let stretchTask = tasks.first(where: { $0.id == "stretch" }) {
                     let stretchCard = CustomInstructionsTaskViewController(task: stretchTask, eventQuery: .init(for: date),
                                                                  storeManager: self.storeManager)
-                    stretchCard.detailImageFileName = "exercise.jpg" // We set our own image
-                    stretchCard.detailHTML = .init(html: "Stretching is good for you!")
+                    stretchCard.detailHTML = .init(html: "Stretching is good for you!") // We set our own text
                     listViewController.appendViewController(stretchCard, animated: false)
                 }
 
