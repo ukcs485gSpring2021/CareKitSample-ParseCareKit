@@ -111,30 +111,51 @@ class CareViewController: OCKDailyPageViewController {
             case .failure(let error): print("Error: \(error)")
             case .success(let tasks):
 
-                // Add a non-CareKit view into the list
-                let tipTitle = "Benefits of exercising"
-                let tipText = "Learn how activity can promote a healthy pregnancy."
-
                 // Only show the tip view on the current date
                 if Calendar.current.isDate(date, inSameDayAs: Date()) {
+                    // Add a non-CareKit view into the list
+                    let tipTitle = "Benefits of exercising"
+                    let tipText = "Learn how activity can promote a healthy pregnancy."
+                    
                     let tipView = TipView()
                     tipView.headerView.titleLabel.text = tipTitle
                     tipView.headerView.detailLabel.text = tipText
                     tipView.imageView.image = UIImage(named: "exercise.jpg")
                     listViewController.appendView(tipView, animated: false)
+                    
+                    //New a different way of showing card
+                    let featuredContent = CustomFeaturedContentView()
+                    featuredContent.imageView.image = UIImage(named: "exercise.jpg")
+                    featuredContent.label.text = tipTitle
+                    featuredContent.label.textColor = .white
+                    listViewController.appendView(featuredContent, animated: false)
                 }
 
-                if #available(iOS 14, *), let walkTask = tasks.first(where: { $0.id == "steps" }) {
+                if #available(iOS 14, *) {
+                    if let walkTask = tasks.first(where: { $0.id == "steps" }) {
 
-                    let view = NumericProgressTaskView(
-                        task: walkTask,
-                        eventQuery: OCKEventQuery(for: date),
-                        storeManager: self.storeManager)
-                        .padding([.vertical], 10)
+                        let view = NumericProgressTaskView(
+                            task: walkTask,
+                            eventQuery: OCKEventQuery(for: date),
+                            storeManager: self.storeManager)
+                            .padding([.vertical], 10)
 
-                    listViewController.appendViewController(view.formattedHostingController(), animated: false)
+                        listViewController.appendViewController(view.formattedHostingController(), animated: false)
+                    
+                        //New
+                        let labeledValueView = LabeledValueTaskView(
+                            task: walkTask,
+                            eventQuery: OCKEventQuery(for: date),
+                            storeManager: self.storeManager)
+                            .padding([.vertical], 10)
+                        listViewController.appendViewController(labeledValueView.formattedHostingController(), animated: true)
+                    }
+                    
+                    //New
+                    let linkView = LinkView(title: Text("University of Kentucky"), links: [.website("https://www.engr.uky.edu/research-faculty/departments/computer-science", title: "Computer Science")])
+                    listViewController.appendViewController(linkView.formattedHostingController(), animated: true)
                 }
-                
+
                 if let stretchTask = tasks.first(where: { $0.id == "stretch" }) {
                     let stretchCard = CustomInstructionsTaskViewController(task: stretchTask, eventQuery: .init(for: date),
                                                                  storeManager: self.storeManager)
@@ -142,7 +163,7 @@ class CareViewController: OCKDailyPageViewController {
                     stretchCard.detailHTML = .init(html: "Stretching is good for you!")
                     listViewController.appendViewController(stretchCard, animated: false)
                 }
-
+                
                 // Since the kegel task is only scheduled every other day, there will be cases
                 // where it is not contained in the tasks array returned from the query.
                 if let kegelsTask = tasks.first(where: { $0.id == "kegels" }) {
@@ -160,6 +181,10 @@ class CareViewController: OCKDailyPageViewController {
                         storeManager: self.storeManager)
 
                     listViewController.appendViewController(doxylamineCard, animated: false)
+                    
+                    //New
+                    let stretchCardGrid = OCKGridTaskViewController(task: doxylamineTask, eventQuery: .init(for: date), storeManager: self.storeManager)
+                    listViewController.appendViewController(stretchCardGrid, animated: true)
                 }
 
                 // Create a card for the nausea task if there are events for it on this day.
