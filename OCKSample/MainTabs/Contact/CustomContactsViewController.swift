@@ -75,7 +75,7 @@ class CustomContactsViewController: OCKListViewController {
                     return
                 }
                 
-                let filterdContacts = convertedContacts.filter{
+                let filterdContacts = convertedContacts.filter {
                     if $0.id == personUUIDString {
                         //Should not show the contact info for this user
                         return false
@@ -94,7 +94,7 @@ class CustomContactsViewController: OCKListViewController {
             guard let synchronizedStoreManager = self.appDelegate.synchronizedStoreManager else {
                 return
             }
-            let contactViewController = OCKDetailedContactViewController(contact: contact, storeManager: synchronizedStoreManager)
+            let contactViewController = OCKSimpleContactViewController(contact: contact, storeManager: synchronizedStoreManager)
             contactViewController.delegate = self.contactDelegate
             self.appendViewController(contactViewController, animated: false)
         }

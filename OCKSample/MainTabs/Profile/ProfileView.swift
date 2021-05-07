@@ -29,11 +29,15 @@ struct ProfileView: View {
 
     @State private var tintColor = UIColor { $0.userInterfaceStyle == .light ?  #colorLiteral(red: 0, green: 0.2858072221, blue: 0.6897063851, alpha: 1) : #colorLiteral(red: 0.06253327429, green: 0.6597633362, blue: 0.8644603491, alpha: 1) }
     @State private var isShowingImagePicker = false
+    @State private var action: Int? = 0
     
     var body: some View {
         //A NavigationView is needed to use Picker
         NavigationView {
             VStack {
+                NavigationLink(destination: MyContactView(), tag: 1, selection: $action) {
+                    EmptyView()
+                }
                 if let image = profileViewModel.profilePicture {
                     Image(uiImage: image)
                         .resizable()
@@ -145,7 +149,12 @@ struct ProfileView: View {
                         })
                     }
                 }
-            }
+            }.navigationBarItems(trailing:
+                Button(action: {
+                    self.action = 1
+                }) {
+                    Text("My Contact")
+                })
         }.onReceive(profileViewModel.$patient, perform: { patient in
             if let currentFirstName = patient?.name.givenName {
                 firstName = currentFirstName
