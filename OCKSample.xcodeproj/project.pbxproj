@@ -23,6 +23,7 @@
 		703A7E6F2644DCEA007D8979 /* CustomContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703A7E6E2644DCEA007D8979 /* CustomContactsViewController.swift */; };
 		703A7E7D2645761B007D8979 /* MyContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703A7E7C2645761B007D8979 /* MyContactView.swift */; };
 		703A7E822645769B007D8979 /* MyContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703A7E812645769B007D8979 /* MyContactViewController.swift */; };
+		703A7E9526458B71007D8979 /* CustomFeaturedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703A7E9426458B71007D8979 /* CustomFeaturedContentView.swift */; };
 		707CC714254DA91900116728 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 707CC70F254DA91900116728 /* Localizable.strings */; };
 		707CC715254DA91900116728 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 707CC70F254DA91900116728 /* Localizable.strings */; };
 		707CC716254DA91900116728 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 707CC711254DA91900116728 /* Localizable.stringsdict */; };
@@ -142,6 +143,7 @@
 		703A7E6E2644DCEA007D8979 /* CustomContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomContactsViewController.swift; sourceTree = "<group>"; };
 		703A7E7C2645761B007D8979 /* MyContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyContactView.swift; sourceTree = "<group>"; };
 		703A7E812645769B007D8979 /* MyContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyContactViewController.swift; sourceTree = "<group>"; };
+		703A7E9426458B71007D8979 /* CustomFeaturedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeaturedContentView.swift; sourceTree = "<group>"; };
 		705B22BE25E2C1A700C472AC /* OCKWatchSample Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "OCKWatchSample Extension.entitlements"; sourceTree = "<group>"; };
 		707CC710254DA91900116728 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		707CC712254DA91900116728 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				70F79B232642C3B600731C46 /* CustomInstructionsTaskViewController.swift */,
+				703A7E9426458B71007D8979 /* CustomFeaturedContentView.swift */,
 				70F79B362642DBC100731C46 /* CustomButtonLogTaskViewController.swift */,
 				70F79B602644325B00731C46 /* LogValueView.swift */,
 				70F79B652644339E00731C46 /* LogValue.swift */,
@@ -626,6 +629,7 @@
 				70F79B192641FB7F00731C46 /* ImagePicker.swift in Sources */,
 				7036E4BF256DA089006E9A3C /* Login.swift in Sources */,
 				7036E517256F2413006E9A3C /* Profile.swift in Sources */,
+				703A7E9526458B71007D8979 /* CustomFeaturedContentView.swift in Sources */,
 				70F79B372642DBC100731C46 /* CustomButtonLogTaskViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
