@@ -17,7 +17,7 @@ struct ContactView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> some UIViewController {
         
-        let contacts = OCKContactsListViewController(storeManager: manager)
+        let contacts = CustomContactsViewController()
         return UINavigationController(rootViewController: contacts)
     }
     
