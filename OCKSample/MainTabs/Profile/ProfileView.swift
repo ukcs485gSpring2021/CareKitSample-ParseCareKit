@@ -29,13 +29,17 @@ struct ProfileView: View {
 
     @State private var tintColor = UIColor { $0.userInterfaceStyle == .light ?  #colorLiteral(red: 0, green: 0.2858072221, blue: 0.6897063851, alpha: 1) : #colorLiteral(red: 0.06253327429, green: 0.6597633362, blue: 0.8644603491, alpha: 1) }
     @State private var isShowingImagePicker = false
-    @State private var action: Int? = 0
-    
+    @State private var displayContact: Int? = 0
+    @State private var displayTask: Int? = 0
+
     var body: some View {
         //A NavigationView is needed to use Picker
         NavigationView {
             VStack {
-                NavigationLink(destination: MyContactView(), tag: 1, selection: $action) {
+                NavigationLink(destination: UpdateTasksView(date: Date()), tag: 1, selection: $displayTask) {
+                    EmptyView()
+                }
+                NavigationLink(destination: MyContactView(), tag: 1, selection: $displayContact) {
                     EmptyView()
                 }
                 if let image = profileViewModel.profilePicture {
@@ -149,12 +153,18 @@ struct ProfileView: View {
                         })
                     }
                 }
-            }.navigationBarItems(trailing:
-                Button(action: {
-                    self.action = 1
-                }) {
-                    Text("My Contact")
-                })
+            }.navigationBarItems(leading:
+                                    Button(action: {
+                                        self.displayTask = 1
+                                    }) {
+                                        Text("Update Tasks")
+                                    },
+                                 trailing:
+                                    Button(action: {
+                                        self.displayContact = 1
+                                 }) {
+                                        Text("My Contact")
+                                 })
         }.onReceive(profileViewModel.$patient, perform: { patient in
             if let currentFirstName = patient?.name.givenName {
                 firstName = currentFirstName

@@ -11,6 +11,12 @@
 		5173CB8A23C3A846007655A0 /* OCKSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5173CB8923C3A846007655A0 /* OCKSampleUITests.swift */; };
 		70077597252228E900EC0EDA /* ParseObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70077596252228E900EC0EDA /* ParseObjects.swift */; };
 		7007759B252229C900EC0EDA /* ParseObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70077596252228E900EC0EDA /* ParseObjects.swift */; };
+		70175D3326483723001BE70E /* UpdateTasksContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175D3226483723001BE70E /* UpdateTasksContentView.swift */; };
+		70175D3826483809001BE70E /* UpdateTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175D3726483809001BE70E /* UpdateTasksView.swift */; };
+		70175D3D2648382C001BE70E /* UpdateTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175D3C2648382C001BE70E /* UpdateTasks.swift */; };
+		70175D4226485199001BE70E /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175D4126485199001BE70E /* Task.swift */; };
+		70175D4726485A57001BE70E /* HealthKitTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175D4626485A57001BE70E /* HealthKitTask.swift */; };
+		70175D4C26486522001BE70E /* ScheduleElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175D4B26486522001BE70E /* ScheduleElement.swift */; };
 		70308886258273D400FFABB6 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70308885258273D400FFABB6 /* Login.swift */; };
 		7030889A2582995200FFABB6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703088992582995200FFABB6 /* Constants.swift */; };
 		7036E4BF256DA089006E9A3C /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036E4BE256DA089006E9A3C /* Login.swift */; };
@@ -131,6 +137,12 @@
 		5173CB8B23C3A846007655A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51F6343923D2877B00FE576E /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		70077596252228E900EC0EDA /* ParseObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseObjects.swift; sourceTree = "<group>"; };
+		70175D3226483723001BE70E /* UpdateTasksContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTasksContentView.swift; sourceTree = "<group>"; };
+		70175D3726483809001BE70E /* UpdateTasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTasksView.swift; sourceTree = "<group>"; };
+		70175D3C2648382C001BE70E /* UpdateTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTasks.swift; sourceTree = "<group>"; };
+		70175D4126485199001BE70E /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		70175D4626485A57001BE70E /* HealthKitTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTask.swift; sourceTree = "<group>"; };
+		70175D4B26486522001BE70E /* ScheduleElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleElement.swift; sourceTree = "<group>"; };
 		70308885258273D400FFABB6 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		703088992582995200FFABB6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7036E4BE256DA089006E9A3C /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -302,6 +314,12 @@
 			children = (
 				70F79B232642C3B600731C46 /* CustomInstructionsTaskViewController.swift */,
 				703A7E9426458B71007D8979 /* CustomFeaturedContentView.swift */,
+				70175D3226483723001BE70E /* UpdateTasksContentView.swift */,
+				70175D3726483809001BE70E /* UpdateTasksView.swift */,
+				70175D3C2648382C001BE70E /* UpdateTasks.swift */,
+				70175D4126485199001BE70E /* Task.swift */,
+				70175D4626485A57001BE70E /* HealthKitTask.swift */,
+				70175D4B26486522001BE70E /* ScheduleElement.swift */,
 				70F79B362642DBC100731C46 /* CustomButtonLogTaskViewController.swift */,
 				70F79B602644325B00731C46 /* LogValueView.swift */,
 				70F79B652644339E00731C46 /* LogValue.swift */,
@@ -612,7 +630,9 @@
 				7036E64025717F85006E9A3C /* Constants.swift in Sources */,
 				7036E4CE256E9A0C006E9A3C /* ContactView.swift in Sources */,
 				703A7E7D2645761B007D8979 /* MyContactView.swift in Sources */,
+				70175D4C26486522001BE70E /* ScheduleElement.swift in Sources */,
 				70DFD80B2567074500B9DB12 /* LoginView.swift in Sources */,
+				70175D3326483723001BE70E /* UpdateTasksContentView.swift in Sources */,
 				E72B2C0A226939E3009A9438 /* AppDelegate.swift in Sources */,
 				70F79B612644325B00731C46 /* LogValueView.swift in Sources */,
 				7036E4C4256E0A48006E9A3C /* CareView.swift in Sources */,
@@ -620,6 +640,7 @@
 				703A7E822645769B007D8979 /* MyContactViewController.swift in Sources */,
 				7036E4D3256EBE35006E9A3C /* MainView.swift in Sources */,
 				70F79B242642C3B600731C46 /* CustomInstructionsTaskViewController.swift in Sources */,
+				70175D3826483809001BE70E /* UpdateTasksView.swift in Sources */,
 				703A7E6F2644DCEA007D8979 /* CustomContactsViewController.swift in Sources */,
 				707CC718254DA91900116728 /* OCKLocalization.swift in Sources */,
 				E7C37849228F887800E982D8 /* TipView.swift in Sources */,
@@ -629,8 +650,11 @@
 				70F79B192641FB7F00731C46 /* ImagePicker.swift in Sources */,
 				7036E4BF256DA089006E9A3C /* Login.swift in Sources */,
 				7036E517256F2413006E9A3C /* Profile.swift in Sources */,
+				70175D3D2648382C001BE70E /* UpdateTasks.swift in Sources */,
 				703A7E9526458B71007D8979 /* CustomFeaturedContentView.swift in Sources */,
+				70175D4226485199001BE70E /* Task.swift in Sources */,
 				70F79B372642DBC100731C46 /* CustomButtonLogTaskViewController.swift in Sources */,
+				70175D4726485A57001BE70E /* HealthKitTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
